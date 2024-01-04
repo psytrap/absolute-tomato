@@ -1,1 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Absolute Tomato - The Pomodoro Timer</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/AAAFCUlEQVRYw+2WW2yUZRCGn/n+f9ttYUt3hVKopRQ5FQUkVORCglrRVEOMh4h4YUQ0xsRAMJiYeALjBSZeqMFENBoPMVFBEStUPIKoCGqg0FhIQdptXQpt7XbbPf//N15gjCagpXBleG9n5pv3e5N3ZuACLuD/gG3NDTrcWvdcGjfu+1g/72zgtW1vDfsNM9zCZ55epV/GdtKRStG1tf0fsUffqR+yIjLUxLWvL9aSzjCR30LUH9zMDzMi3HdFGenvRvL49sMsKUvQNGY2TfcIu3qESS0VbHj1VTlnAuvrb9VgOkVLRQaWdrPwzQSj2h32V0zgkZIRjNjZxupuD1MX5KfllmS0iK5XsizpFezsah5r3CLDJvDy/Dq9LZwmPM7l0x1Rnl9cyeSbu0n6QT7YNgVpj1O46yiDl1TD3HFUn+jjkp+iXBsdYOpUaLtMiH0srMv9esY+zpkCTy2o12XBASL3LyfX0orzTTtT9wxyMD6ZRLFHyYQTJL3f0cEMeTOeYLllQVUTdfOSlFzn88WcEfg1MKMBakxozS7tX3tWLri+JEXJzGlQWYkJlzJuuhI6kaH1cCvxO3PsKCgnV1pM4eUhbqo9xmcfjad1coR42UWA0nGojYXPFREnzaR/Efq0kTXXLNZHqwcJ3Hov7Pse2f4hvoVtg0WM3fAGK5uepnu74YamDiaEA+xeNo6pFa0EnhyJSpACtdASZ4xvGYUSEIeTTo6V+U4ZkgITU0kkXIY3sQbXOvj5Yg5u3MShNVme3fI807ckeLKnhzmjU1wkHm+vN2y+4zIufXgfi1YY5k9Lc9IqPQToIkC/OrhnEPu0ChwNlmn5HbVIqUvRCx9h237FvriOHxs/pTlnqS0QZs+ahF5Zh+zfTf7YPr7sDNAvwtWlPmHN0X1AOGldesWljQARxyUmWVbmo/KfCmjWI/HuHiK3T8fb+y1SXQ0PrOCKdILaBYtwNm7A3nIXTLkUiR6hoN1w/dgcvgeCEj8MooIVQxKhF0ME0NP897STMIGD5ymZn1sxax9CP3kPk0/B3LloKITOuwopKobGrZgDX2NzPl7SZ7BTSXQq+STEMaQ5RcACHqAiQ3PBAA6FgHQoI8NdmA/egeb9mIqLMVvfh0k1aMMmzMHdWEdIHvfwc0L2JHgqIJBQw4BAQgUr4CNYdGgEYgiuuuRzllCXB7+1Y5uj2GnTCca6KOrqIJfyyXRbcITscfCtkFYhhSGvgocQV8FHyCJYUXSoc+C72ZW4TTHG+9AZdQnjY1Wx7S1kiyEVMdi04Pc5ZNQiGMCQxmEAg4cQw5DEYVAcxogwIB6rc+1Ds+H6/XtlplSpj4NRj7QaQvgE8PFTSi5lMQi+CJ465AWsGHpxiSMMqCGNEBehH8N4UfrFP7t1PHbOxcQwtKhLHEM/AXwMORzSOCQxZNSgCH0EiKtLH4YedUhh6BZDrzpUClQ5AkbOfhk1yAT9RV3KxaccSxCLq/YvO/lAFsggZMSQUhcP6Ec4IS6jDdS6yjHJszzTJsNax59IlR5Sh0IUI+CiVGmetAj9CKqCRUgjZMVhACGlQrEI1xb4tOFzd7ZNzukgecKp3DpFAzcesafSS/ApQUlgMAgZgT4MRoW8KHWOgGO5KXtUzttF9FKwSmfh4qvhq5yPcspqFkGBMUaYH1AsysLMETnvJ9nfsT04UbGCCMif5hYjtKrHg9mo8L/HqqUrDRdwnvAHfVA3cCdaLX0AAAAASUVORK5CYII="/>
 
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }    
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 2.2rem;
+          height: 1.4rem;
+        }
+
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 1rem;
+          width: 1rem;
+          left: 0.2rem;
+          bottom: 0.2rem;
+          background-color: white;
+          transition: .4s;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(0.8rem);
+        }   
+        table, th, td {
+          border: .05rem solid black;
+          border-collapse: collapse;
+          padding: .3rem;  
+        }        
+    </style>
+</head>
+<body>
+    <label for="workIntervalInput">Work interval:</label>    
+    <input type="number" id="workIntervalInput" min="5" max="60" step="5" value="25" style="width : 4rem"/>
+    <label for="workIntervalInput">Minutes</label>
+    <br/>
+    <label for="breakIntervalInput">Break interval:</label>    
+    <input type="number" id="breakIntervalInput" min="1" max="15" step="1" value="5" style="width : 4rem"/>
+    <label for="breakIntervalInput">Minutes</label>
+    <br/>
+    <label for="notificationIntervalInput">Notification repetition:</label>    
+    <input type="number" id="notificationIntervalInput" min="5" max="120" step="5" value="10" style="width : 4rem"/>
+    <label for="notificationIntervalInput">Seconds</label>
+    <br/>
+    <label for="notificationVolumeInput">Notification volume:</label>    
+    <input type="number" id="notificationVolumeInput" min="10" max="100" step="10" value="20" style="width : 4rem"/>
+    <label for="notificationVolumeInput">Percent</label>
+    <br/>    
+    <label class="switch">
+        <input type="checkbox" id="timerSwitch">
+        <span class="slider"></span>
+    </label>
+    <span>Timer</span>
+    <br/>
+
+    <ul style="list-style-type: none">
+        <li id="workTimer">
+            Work timer: <span id="timer">+0m00s</span>
+        </li>
+        <li id="breakTimer">
+            Break timer: <span id="timer">+0m00s</span>
+        </li>
+    </ul>
+
+
+    <button id="workButton" disabled>Work</button> <button id="breakButton" disabled>Break</button>
+    <br/>
+    <table id="statistics">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Work</th>
+                <th>Break</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <br/>
+    <small><a id="bookmark" href="">permalink</a></small>
+    
+    <script type="text/javascript">
+        const timer_states = {
+            WORK: 'work',
+            BREAK: 'break',
+            OFF: 'off'
+        };
+        let timer_state = timer_states.OFF;
+        let timer = setInterval(() => {
+                console.log('tick');
+                handleTick();
+            }, 1000);
+        let timer_seconds = 0;
+        let timeout_seconds = 0;
+
+        let work_interval_minutes = 0;
+        let break_interval_minutes = 0;
+        let notification_seconds = 0;
+        let notification_volume = 0;
+        let audioContext = null;
+        
+        const ID_WORK = "workIntervalInput";
+        const ID_WORK_TIMER = "workTimer";
+        const ID_BREAK = "breakIntervalInput";
+        const ID_BREAK_TIMER = "breakTimer";
+        const ID_NOTIFICATION = "notificationIntervalInput";
+        const ID_NOTIFICATION_VOLUME = "notificationVolumeInput";        
+        const ID_TIMER = "timer";        
+        const ID_TIMER_SWITCH = 'timerSwitch';
+        const ID_BREAK_BUTTON = 'breakButton';        
+        const ID_WORK_BUTTON = 'workButton';
+        const ID_STATISTICS_TABLE = 'statistics';
+        const ID_BOOKMARK = 'bookmark';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            work_interval_minutes = document.getElementById(ID_WORK).value;        
+            break_interval_minutes = document.getElementById(ID_BREAK).value;        
+            notification_seconds = document.getElementById(ID_NOTIFICATION).value;        
+            notification_volume = document.getElementById(ID_NOTIFICATION_VOLUME).value/100;
+            document.getElementById(ID_WORK).addEventListener('change', function() {
+                work_interval_minutes = this.value;
+                if ( timer_state !== timer_states.WORK) {
+                    updateTimer(ID_WORK_TIMER, work_interval_minutes * 60);
+                }
+                updateBookmark();
+            });
+            document.getElementById(ID_BREAK).addEventListener('change', function() {
+                break_interval_minutes = this.value;
+                if ( timer_state !== timer_states.BREAK) {
+                    updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);
+                }
+                updateBookmark();
+            });
+            document.getElementById(ID_NOTIFICATION).addEventListener('change', function() {
+                notification_seconds = this.value;
+                updateBookmark();
+            });
+            document.getElementById(ID_NOTIFICATION_VOLUME).addEventListener('change', function() {
+                notification_volume = this.value/100;
+                updateBookmark();
+            });
+
+            document.getElementById(ID_TIMER_SWITCH).addEventListener('change', function() {
+                if(! audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (this.checked) {
+                    start();
+                } else {
+                    stop();
+                }
+            });
+            document.getElementById(ID_TIMER_SWITCH).checked = false;
+            document.getElementById(ID_BREAK_BUTTON).addEventListener('click', handleBreakButton);
+            document.getElementById(ID_WORK_BUTTON).addEventListener('click', handleWorkButton);
+            updateTimer(ID_WORK_TIMER, work_interval_minutes * 60);                    
+            updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);
+            updateFromParameters();
+        });
+        
+        function handleBreakButton() {
+            timer_state = timer_states.BREAK;
+            timer_seconds = 0;
+            document.getElementById(ID_BREAK_BUTTON).disabled = true;
+            document.getElementById(ID_WORK_BUTTON).disabled = false;
+        }
+        
+        function handleWorkButton() {
+            createStatisticsRow();
+
+            timer_state = timer_states.WORK;
+            timer_seconds = 0;
+            updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);                
+            document.getElementById(ID_BREAK_BUTTON).disabled = false;
+            document.getElementById(ID_WORK_BUTTON).disabled = true;
+        }
+        
+        function updateFromParameters() {
+            const currentUrl = new URL(window.location.href);
+            const urlParams = currentUrl.searchParams;
+            function updateFromParameter(input_id, parameter) {
+                if (urlParams.has(parameter)) {
+                    let element = document.getElementById(input_id);
+                    element.value = urlParams.get(parameter);    
+                    element.dispatchEvent(new Event('change'));
+                }
+            }
+            updateFromParameter(ID_WORK, 'work');
+            updateFromParameter(ID_BREAK, 'break');
+            updateFromParameter(ID_NOTIFICATION, 'repetition');
+            updateFromParameter(ID_NOTIFICATION_VOLUME, 'volume');
+        }
+
+        function start() {
+            createStatisticsRow();        
+            timer_seconds = 0;
+            timer_state = timer_states.WORK;
+            updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);            
+            document.getElementById(ID_BREAK_BUTTON).disabled = false;
+            document.getElementById(ID_WORK_BUTTON).disabled = true;
+        }
+        
+        function handleTick() {
+            function handleTimer(timer_id, timeout_seconds) {
+                let time_left_seconds = timeout_seconds - timer_seconds;
+                updateTimer(timer_id, time_left_seconds);
+                if(time_left_seconds <= 0 && (time_left_seconds % notification_seconds == 0)) {
+                    timerSignal();
+                }                        
+                timer_seconds = timer_seconds + 1;
+            }
+        
+            switch(timer_state) {
+                case timer_states.WORK:
+                    updateStatisticsRow();                    
+                    handleTimer(ID_WORK_TIMER, work_interval_minutes * 60);
+                    break;                
+                case timer_states.BREAK:
+                    updateStatisticsRow();                    
+                    handleTimer(ID_BREAK_TIMER, break_interval_minutes * 60);
+                    break;
+            }
+
+        }
+        function updateTimer(timer_id, timer) {
+            let timerElement = document.getElementById(timer_id)
+            let minutes = Math.floor(Math.abs(timer) / 60);
+            let seconds = Math.abs(timer) % 60;
+            let str = (timer >= 0 ? '−' : '+') + String(minutes).padStart(1, '0') + "m" + String(seconds).padStart(2, '0') + "s";
+            timerElement.querySelector('#' + ID_TIMER).textContent = str;
+        }        
+        function stop() {
+            timer_state = timer_states.OFF;
+            document.getElementById(ID_BREAK_BUTTON).disabled = true;
+            document.getElementById(ID_WORK_BUTTON).disabled = true;
+            
+        }
+
+        async function timerSignal() {
+            function beep(duration, frequency, volume) {
+                let oscillator = audioContext.createOscillator();
+                let gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                gainNode.gain.value = volume;
+                oscillator.frequency.value = frequency;
+                oscillator.type = "sine";
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration / 1000);
+            }
+
+            let freq = 3080;
+            let duration = 100;
+            let pause = 200;
+            beep(duration, freq, notification_volume);
+            await new Promise(resolve => setTimeout(resolve, pause));
+            beep(duration, freq, notification_volume);
+            await new Promise(resolve => setTimeout(resolve, pause));
+            beep(duration, freq, notification_volume);
+        }
+        
+        function createStatisticsRow() {
+            function getCurrentTimeString() {
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                return hours + ':' + minutes;
+            }        
+            var table = document.getElementById(ID_STATISTICS_TABLE);
+            var row = table.insertRow(1);
+
+            row.insertCell(0).textContent = getCurrentTimeString();
+            row.insertCell(1).textContent = "0m00s";
+            row.insertCell(2).textContent = "0m00s";            
+        }
+        function updateStatisticsRow() {
+            var table = document.getElementById(ID_STATISTICS_TABLE);
+            var row = table.rows[1];
+            var cell = null;
+            switch(timer_state) {
+                case timer_states.WORK:
+                    cell = row.cells[1];                    
+                    break;                
+                case timer_states.BREAK:
+                    cell = row.cells[2];            
+                    break;
+            }
+            let minutes = Math.floor(Math.abs(timer_seconds) / 60);
+            let seconds = Math.abs(timer_seconds) % 60;
+            cell.textContent = String(minutes).padStart(1, '0') + "m" + String(seconds).padStart(2, '0') + "s";
+        }
+
+
+        function updateBookmark() {
+            const currentUrl = new URL(window.location.href);
+            const urlParams = currentUrl.searchParams;
+            urlParams.set('work', document.getElementById(ID_WORK).value);
+            urlParams.set('break', document.getElementById(ID_BREAK).value);
+            urlParams.set('repetition', document.getElementById(ID_NOTIFICATION).value);
+            urlParams.set('volume', document.getElementById(ID_NOTIFICATION_VOLUME).value);
+            document.getElementById(ID_BOOKMARK).href = currentUrl.toString();
+        }
+        
+
+    </script>
+</body>
+</html>
