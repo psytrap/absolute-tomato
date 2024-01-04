@@ -6,6 +6,8 @@
 
 
     <style>
+    /* Colors according Tailwind CSS https://flowbite.com/docs/components/footer/ */
+    /* TODO Slider */
         body {
             font-size: 150%;
             line-height: 1.5;
@@ -18,7 +20,19 @@
         button {
             font-size: 150%;
             padding: 1rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background-color: #0ea5e9;
+            color: #ffffff;
+            border: .1rem solid #0ea5e9;
+            border-radius: 1rem;
         }
+        button:disabled, button[disabled] {        
+            border: .1rem solid #4b5563;
+            background-color: #334155;
+            color: #9ca3af;  
+        }
+
         table {
             margin-top: 1rem;
         }
@@ -37,6 +51,12 @@
             font-size: 150%;
             line-height: 2;            
         }
+        input[type="range"] {
+            height: 2rem;
+        }
+        a {
+            color: #3b82f6;
+        }
     </style>
 </head>
 <body>
@@ -44,7 +64,7 @@
     <!--<p>The Minimalistic Pomodoro Timer</p>-->
 
     <div style="padding: 1rem; margin-bottom: 1rem;">
-        <div class="timerDiv"><button id="startTimerButton" disabled>&#9658; Timer</button>&nbsp;&nbsp;&nbsp;<button id="stopTimerButton" disabled>&#9726;</button></div>
+        <div class="timerDiv"><button id="startTimerButton" disabled>&#9658; Timer</button>&nbsp;&nbsp;&nbsp;<button id="stopTimerButton" disabled>&#9726;&#xfe0e;</button></div><!--  &#x25a0;&#x25b6; -->
         <div class="timerDiv timers"><p align="center">
             <span id="workTimer">0m00s</span>
             <br/>
@@ -87,8 +107,8 @@
         <tbody>
         </tbody>
     </table>
-    <br/>
-    <p>This site is open source. Checkout <a href="https://github.com/psytrap/every-smart/tree/main/Readme.md">here</a>.</p>    
+    <hr style="color: #374151; margin-top: 2rem;">
+    <small><p>This site is open source. Checkout <a href="https://github.com/psytrap/every-smart/tree/main/Readme.md">here</a>.</small>    
     <script type="text/javascript">
         const timer_states = {
             WORK: 'work',
