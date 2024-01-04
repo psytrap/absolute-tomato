@@ -46,29 +46,32 @@
     <div style="padding: 1rem; margin-bottom: 1rem;">
         <div class="timerDiv"><button id="startTimerButton" disabled>&#9658; Timer</button>&nbsp;&nbsp;&nbsp;<button id="stopTimerButton" disabled>&#9726;</button></div>
         <div class="timerDiv timers"><p align="center">
-            <span id="workTimer">+0m00s</span>
+            <span id="workTimer">0m00s</span>
             <br/>
-            <span id="breakTimer">+0m00s</span>
+            <span id="breakTimer">0m00s</span>
             </p>
         </div>
         <div class="timerDiv"><button id="workButton" disabled>Work</button>&nbsp;&nbsp;&nbsp;<button id="breakButton" disabled>Break</button></div>
     </div>
 
-    <label for="workIntervalInput">Work interval:</label>    
-    <input type="number" id="workIntervalInput" min="5" max="60" step="5" value="25" style="width : 3rem"/>
-    <label for="workIntervalInput">Minutes</label>
+    <label for="workIntervalInput">Work interval:</label> <span id="workInterval">25</span>&nbsp;<label for="workIntervalInput">Minutes</label>
+    <br>
+    <input id="workIntervalInput" type="range" min="0" max="60" value="25" step="5" style="width: 100%">
     <br/>
-    <label for="breakIntervalInput">Break interval:</label>    
-    <input type="number" id="breakIntervalInput" min="1" max="15" step="1" value="5" style="width : 3rem"/>
-    <label for="breakIntervalInput">Minutes</label>
+    
+    <label for="breakIntervalInput">Break interval:</label> <span id="breakInterval">5</span> <label for="breakIntervalInput">Minutes</label>
     <br/>
-    <label for="notificationIntervalInput">Notification repetition:</label>    
-    <input type="number" id="notificationIntervalInput" min="5" max="120" step="5" value="10" style="width : 3rem"/>
-    <label for="notificationIntervalInput">Seconds</label>
+    <input id="breakIntervalInput" type="range" min="0" max="20" value="5" step="1" style="width: 100%">
     <br/>
-    <label for="notificationVolumeInput">Notification volume:</label>    
-    <input type="number" id="notificationVolumeInput" min="10" max="100" step="10" value="20" style="width : 3rem"/>
-    <label for="notificationVolumeInput">Percent</label>
+
+    <label for="notificationIntervalInput">Notification repetition:</label> <span id="notificationInterval">10</span>&nbsp;<label for="notificationIntervalInput">Seconds</label>
+    <br/>
+    <input type="range" id="notificationIntervalInput" min="5" max="120" step="5" value="10" style="width: 100%">
+    <br/>
+    
+    <label for="notificationVolumeInput">Notification volume:</label> <span id="notificationVolume">10</span>&nbsp;<label for="notificationVolumeInput">Percent</label>
+    <br/>
+    <input type="range" id="notificationVolumeInput" min="10" max="100" step="10" value="20" style="width: 100%">
     <br/>
     <small><a id="bookmark" href="">permalink</a></small>
 
@@ -106,12 +109,16 @@
         let notification_volume = 0;
         let audioContext = null;
         
-        const ID_WORK = "workIntervalInput";
+        const ID_WORK = "workInterval";
+        const ID_WORK_INPUT = "workIntervalInput";        
         const ID_WORK_TIMER = "workTimer";
-        const ID_BREAK = "breakIntervalInput";
+        const ID_BREAK = "breakInterval";        
+        const ID_BREAK_INPUT = "breakIntervalInput";
         const ID_BREAK_TIMER = "breakTimer";
-        const ID_NOTIFICATION = "notificationIntervalInput";
-        const ID_NOTIFICATION_VOLUME = "notificationVolumeInput";        
+        const ID_NOTIFICATION = "notificationInterval";
+        const ID_NOTIFICATION_INPUT = "notificationIntervalInput";        
+        const ID_NOTIFICATION_VOLUME = "notificationVolume";
+        const ID_NOTIFICATION_VOLUME_INPUT = "notificationVolumeInput";
         const ID_START_TIMER = "startTimerButton";        
         const ID_STOP_TIMER = "stopTimerButton";        
         const ID_TIMER_SWITCH = 'timerSwitch';
@@ -121,30 +128,34 @@
         const ID_BOOKMARK = 'bookmark';
         
         document.addEventListener('DOMContentLoaded', function() {
-            work_interval_minutes = document.getElementById(ID_WORK).value;        
-            break_interval_minutes = document.getElementById(ID_BREAK).value;        
-            notification_seconds = document.getElementById(ID_NOTIFICATION).value;        
-            notification_volume = document.getElementById(ID_NOTIFICATION_VOLUME).value/100;
-            document.getElementById(ID_WORK).addEventListener('change', function() {
+            work_interval_minutes = document.getElementById(ID_WORK_INPUT).value;        
+            break_interval_minutes = document.getElementById(ID_BREAK_INPUT).value;        
+            notification_seconds = document.getElementById(ID_NOTIFICATION_INPUT).value;        
+            notification_volume = document.getElementById(ID_NOTIFICATION_VOLUME_INPUT).value/100;
+            document.getElementById(ID_WORK_INPUT).addEventListener('input', function() {
                 work_interval_minutes = this.value;
+                document.getElementById(ID_WORK).textContent = this.value;
                 if ( timer_state !== timer_states.WORK) {
                     updateTimer(ID_WORK_TIMER, work_interval_minutes * 60);
                 }
                 updateBookmark();
             });
-            document.getElementById(ID_BREAK).addEventListener('change', function() {
+            document.getElementById(ID_BREAK_INPUT).addEventListener('input', function() {
                 break_interval_minutes = this.value;
+                document.getElementById(ID_BREAK).textContent = this.value;
                 if ( timer_state !== timer_states.BREAK) {
                     updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);
                 }
                 updateBookmark();
             });
-            document.getElementById(ID_NOTIFICATION).addEventListener('change', function() {
+            document.getElementById(ID_NOTIFICATION_INPUT).addEventListener('input', function() {
                 notification_seconds = this.value;
+                document.getElementById(ID_NOTIFICATION).textContent = this.value;
                 updateBookmark();
             });
-            document.getElementById(ID_NOTIFICATION_VOLUME).addEventListener('change', function() {
+            document.getElementById(ID_NOTIFICATION_VOLUME_INPUT).addEventListener('input', function() {
                 notification_volume = this.value/100;
+                document.getElementById(ID_NOTIFICATION_VOLUME).textContent = this.value;                
                 updateBookmark();
             });
             document.getElementById(ID_START_TIMER).addEventListener('click', function() {
@@ -159,13 +170,13 @@
 
             document.getElementById(ID_BREAK_BUTTON).addEventListener('click', handleBreakButton);
             document.getElementById(ID_WORK_BUTTON).addEventListener('click', handleWorkButton);
-            updateTimer(ID_WORK_TIMER, work_interval_minutes * 60);                    
-            updateTimer(ID_BREAK_TIMER, break_interval_minutes * 60);
+            
             updateFromParameters();
             document.getElementById(ID_START_TIMER).disabled = false;
             document.getElementById(ID_STOP_TIMER).disabled = true;            
             document.getElementById(ID_BREAK_BUTTON).disabled = true;
             document.getElementById(ID_WORK_BUTTON).disabled = true;
+            console.log(work_interval_minutes, break_interval_minutes, notification_seconds, notification_volume);
             
         });
         
@@ -189,17 +200,20 @@
         function updateFromParameters() {
             const currentUrl = new URL(window.location.href);
             const urlParams = currentUrl.searchParams;
-            function updateFromParameter(input_id, parameter) {
+            function updateFromParameter(input_id, parameter, preset) {
+                let element = document.getElementById(input_id);
                 if (urlParams.has(parameter)) {
-                    let element = document.getElementById(input_id);
                     element.value = urlParams.get(parameter);    
-                    element.dispatchEvent(new Event('change'));
+                } else {
+                    element.value = preset;
                 }
+                element.dispatchEvent(new Event('input'));
             }
-            updateFromParameter(ID_WORK, 'work');
-            updateFromParameter(ID_BREAK, 'break');
-            updateFromParameter(ID_NOTIFICATION, 'repetition');
-            updateFromParameter(ID_NOTIFICATION_VOLUME, 'volume');
+            updateFromParameter(ID_WORK_INPUT, 'work', work_interval_minutes);
+            updateFromParameter(ID_BREAK_INPUT, 'break', break_interval_minutes);
+            updateFromParameter(ID_NOTIFICATION_INPUT, 'repetition', notification_seconds);
+            updateFromParameter(ID_NOTIFICATION_VOLUME_INPUT, 'volume', notification_volume*100);
+            
         }
 
         function start() {
@@ -313,10 +327,10 @@
         function updateBookmark() {
             const currentUrl = new URL(window.location.href);
             const urlParams = currentUrl.searchParams;
-            urlParams.set('work', document.getElementById(ID_WORK).value);
-            urlParams.set('break', document.getElementById(ID_BREAK).value);
-            urlParams.set('repetition', document.getElementById(ID_NOTIFICATION).value);
-            urlParams.set('volume', document.getElementById(ID_NOTIFICATION_VOLUME).value);
+            urlParams.set('work', document.getElementById(ID_WORK_INPUT).value);
+            urlParams.set('break', document.getElementById(ID_BREAK_INPUT).value);
+            urlParams.set('repetition', document.getElementById(ID_NOTIFICATION_INPUT).value);
+            urlParams.set('volume', document.getElementById(ID_NOTIFICATION_VOLUME_INPUT).value);
             document.getElementById(ID_BOOKMARK).href = currentUrl.toString();
         }
         
