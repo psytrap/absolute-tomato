@@ -154,7 +154,7 @@
         const ID_STATISTICS_TABLE = 'statistics';
         const ID_BOOKMARK = 'bookmark';
         
-        class WorkerInterval {
+        class WorkerInterval { // avoids tab throttling
             constructor(callback, interval) {
                 const blob = new Blob([`setInterval(() => postMessage(0), ${interval});`], { type: 'application/javascript' });
                 const workerScript = URL.createObjectURL(blob);
