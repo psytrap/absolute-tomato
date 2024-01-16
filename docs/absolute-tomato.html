@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Absolute Tomato - The Pomodoro Timer</title>
+    <title>Absolute Tomato - Minimalistic Pomodoro Timer</title>
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/AAAFCUlEQVRYw+2WW2yUZRCGn/n+f9ttYUt3hVKopRQ5FQUkVORCglrRVEOMh4h4YUQ0xsRAMJiYeALjBSZeqMFENBoPMVFBEStUPIKoCGqg0FhIQdptXQpt7XbbPf//N15gjCagpXBleG9n5pv3e5N3ZuACLuD/gG3NDTrcWvdcGjfu+1g/72zgtW1vDfsNM9zCZ55epV/GdtKRStG1tf0fsUffqR+yIjLUxLWvL9aSzjCR30LUH9zMDzMi3HdFGenvRvL49sMsKUvQNGY2TfcIu3qESS0VbHj1VTlnAuvrb9VgOkVLRQaWdrPwzQSj2h32V0zgkZIRjNjZxupuD1MX5KfllmS0iK5XsizpFezsah5r3CLDJvDy/Dq9LZwmPM7l0x1Rnl9cyeSbu0n6QT7YNgVpj1O46yiDl1TD3HFUn+jjkp+iXBsdYOpUaLtMiH0srMv9esY+zpkCTy2o12XBASL3LyfX0orzTTtT9wxyMD6ZRLFHyYQTJL3f0cEMeTOeYLllQVUTdfOSlFzn88WcEfg1MKMBakxozS7tX3tWLri+JEXJzGlQWYkJlzJuuhI6kaH1cCvxO3PsKCgnV1pM4eUhbqo9xmcfjad1coR42UWA0nGojYXPFREnzaR/Efq0kTXXLNZHqwcJ3Hov7Pse2f4hvoVtg0WM3fAGK5uepnu74YamDiaEA+xeNo6pFa0EnhyJSpACtdASZ4xvGYUSEIeTTo6V+U4ZkgITU0kkXIY3sQbXOvj5Yg5u3MShNVme3fI807ckeLKnhzmjU1wkHm+vN2y+4zIufXgfi1YY5k9Lc9IqPQToIkC/OrhnEPu0ChwNlmn5HbVIqUvRCx9h237FvriOHxs/pTlnqS0QZs+ahF5Zh+zfTf7YPr7sDNAvwtWlPmHN0X1AOGldesWljQARxyUmWVbmo/KfCmjWI/HuHiK3T8fb+y1SXQ0PrOCKdILaBYtwNm7A3nIXTLkUiR6hoN1w/dgcvgeCEj8MooIVQxKhF0ME0NP897STMIGD5ymZn1sxax9CP3kPk0/B3LloKITOuwopKobGrZgDX2NzPl7SZ7BTSXQq+STEMaQ5RcACHqAiQ3PBAA6FgHQoI8NdmA/egeb9mIqLMVvfh0k1aMMmzMHdWEdIHvfwc0L2JHgqIJBQw4BAQgUr4CNYdGgEYgiuuuRzllCXB7+1Y5uj2GnTCca6KOrqIJfyyXRbcITscfCtkFYhhSGvgocQV8FHyCJYUXSoc+C72ZW4TTHG+9AZdQnjY1Wx7S1kiyEVMdi04Pc5ZNQiGMCQxmEAg4cQw5DEYVAcxogwIB6rc+1Ds+H6/XtlplSpj4NRj7QaQvgE8PFTSi5lMQi+CJ465AWsGHpxiSMMqCGNEBehH8N4UfrFP7t1PHbOxcQwtKhLHEM/AXwMORzSOCQxZNSgCH0EiKtLH4YedUhh6BZDrzpUClQ5AkbOfhk1yAT9RV3KxaccSxCLq/YvO/lAFsggZMSQUhcP6Ec4IS6jDdS6yjHJszzTJsNax59IlR5Sh0IUI+CiVGmetAj9CKqCRUgjZMVhACGlQrEI1xb4tOFzd7ZNzukgecKp3DpFAzcesafSS/ApQUlgMAgZgT4MRoW8KHWOgGO5KXtUzttF9FKwSmfh4qvhq5yPcspqFkGBMUaYH1AsysLMETnvJ9nfsT04UbGCCMif5hYjtKrHg9mo8L/HqqUrDRdwnvAHfVA3cCdaLX0AAAAASUVORK5CYII="/>
 
 
     <style>
     /* Colors according Tailwind CSS https://flowbite.com/docs/components/footer/ */
-    /* TODO Slider */
+    /* TODO 
+    * Slider
+    * +1
+    * Focus / Relax
+    * Klappbox - Collapsible
+    Minor:
+    * Unified button height
+    */
         body {
             font-size: 150%;
             line-height: 1.5;
@@ -61,7 +68,6 @@
 </head>
 <body>
     <h1>&#127813; Absolute Tomato</h1>
-    <!--<p>The Minimalistic Pomodoro Timer</p>-->
 
     <div style="padding: 1rem; margin-bottom: 1rem;">
         <div class="timerDiv"><button id="startTimerButton" disabled>&#9658; Timer</button>&nbsp;&nbsp;&nbsp;<button id="stopTimerButton" disabled>&nbsp;&#9726;&#xfe0e;&nbsp;</button></div><!--  &#x25a0;&#x25b6; -->
@@ -116,10 +122,11 @@
             OFF: 'off'
         };
         let timer_state = timer_states.OFF;
+        /*
         let timer = setInterval(() => {
                 console.log('tick');
                 handleTick();
-            }, 1000);
+            }, 1000);*/
         let timer_seconds = 0;
         let timeout_seconds = 0;
 
@@ -146,6 +153,27 @@
         const ID_WORK_BUTTON = 'workButton';
         const ID_STATISTICS_TABLE = 'statistics';
         const ID_BOOKMARK = 'bookmark';
+        
+        class WorkerInterval {
+            constructor(callback, interval) {
+                const blob = new Blob([`setInterval(() => postMessage(0), ${interval});`], { type: 'application/javascript' });
+                const workerScript = URL.createObjectURL(blob);
+                this.worker = new Worker(workerScript);
+                this.worker.onmessage = callback;
+            }
+
+            stop() {
+                this.worker.terminate();
+            }
+        }
+
+        function callback() {
+            const timerElement = document.getElementById('timer');
+            let count = parseInt(timerElement.textContent, 10);
+            timerElement.textContent = count + 1;
+        }
+
+        const timer = new WorkerInterval(handleTick, 1000); // Update every second        
         
         document.addEventListener('DOMContentLoaded', function() {
             work_interval_minutes = document.getElementById(ID_WORK_INPUT).value;        
